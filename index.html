@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVA AI</title>
+<style>
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:#0b1020;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+header {
+  padding:20px;
+  background:#151d35;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #35415e;
+}
+.logo {font-size:27px;font-weight:bold;color:#a993ff}
+main {max-width:1000px;margin:auto;padding:30px 18px}
+h1 {font-size:38px}
+.subtitle {color:#abb5d0}
+.tools {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+  margin:25px 0;
+}
+.tool {
+  background:#192440;
+  color:white;
+  padding:18px 10px;
+  border:1px solid #344365;
+  border-radius:14px;
+  cursor:pointer;
+  font-size:15px;
+}
+.tool:hover,.tool.active {
+  background:#49377f;
+  border-color:#a993ff;
+}
+.workspace {
+  background:#151e35;
+  padding:22px;
+  border-radius:18px;
+  border:1px solid #344365;
+}
+textarea {
+  width:100%;
+  height:140px;
+  background:#0b1428;
+  color:white;
+  border:1px solid #445276;
+  border-radius:12px;
+  padding:15px;
+  resize:vertical;
+  font-size:16px;
+}
+button {
+  cursor:pointer;
+}
+.send {
+  background:#8868ed;
+  color:white;
+  border:0;
+  border-radius:10px;
+  padding:13px 22px;
+  margin-top:12px;
+  font-weight:bold;
+}
+.output {
+  background:#0b1428;
+  padding:16px;
+  border-radius:12px;
+  margin-top:18px;
+  min-height:60px;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+.hidden {display:none}
+footer {text-align:center;color:#8995b4;padding:30px}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">✦ NOVA AI</div>
+  <div>⚡ AI WORKSPACE</div>
+</header>
+
+<main>
+  <h1>Welcome to <span style="color:#a993ff">NOVA AI</span></h1>
+  <p class="subtitle">
+    Your creative AI assistant. Imagine, create, write and build.
+  </p>
+
+  <h2>Choose your AI tool</h2>
+
+  <div class="tools">
+    <button class="tool active" onclick="selectTool('AI Assistant',this)">💬<br>AI Chat</button>
+    <button class="tool" onclick="selectTool('Coding Assistant',this)">💻<br>AI Coding</button>
+    <button class="tool" onclick="selectTool('Image Creator',this)">🎨<br>Images</button>
+    <button class="tool" onclick="selectTool('Video Creator',this)">🎬<br>Videos</button>
+    <button class="tool" onclick="selectTool('Essay Writer',this)">📝<br>Essays</button>
+    <button class="tool" onclick="selectTool('Smart Tables',this)">📊<br>Tables</button>
+    <button class="tool" onclick="selectTool('Advanced Reasoning',this)">🧠<br>Super Brain</button>
+  </div>
+
+  <section class="workspace">
+    <h2 id="heading">AI Assistant</h2>
+
+    <textarea id="prompt"
+      placeholder="Tell NOVA what you want to do..."></textarea>
+
+    <button class="send" onclick="runNova()">
+      ✨ Ask NOVA AI
+    </button>
+
+    <div class="output" id="output">
+      Hello! I'm NOVA AI. What can I help you create today?
+    </div>
+  </section>
+</main>
+
+<footer>
+  NOVA AI © 2026 · Your ideas, your future.
+</footer>
+
+<script>
+let currentTool = "AI Assistant";
+
+function selectTool(tool,button) {
+  currentTool = tool;
+
+  document.getElementById("heading").textContent = tool;
+
+  document.querySelectorAll(".tool").forEach(b=>{
+    b.classList.remove("active");
+  });
+
+  button.classList.add("active");
+}
+
+function runNova() {
+  const prompt = document.getElementById("prompt").value.trim();
+  const output = document.getElementById("output");
+
+  if (!prompt) {
+    output.textContent = "Please enter a request first!";
+    return;
+  }
+
+  const instructions = {
+    "AI Assistant":
+      "Answer the user's question clearly and helpfully.",
+    "Coding Assistant":
+      "Act as an expert programmer. Write readable code, explain it and help debug errors.",
+    "Image Creator":
+      "Create a detailed image generation prompt describing the subject, style, lighting and composition.",
+    "Video Creator":
+      "Create a video storyboard with scenes, camera movements and descriptions.",
+    "Essay Writer":
+      "Write a well-structured essay with an introduction, main paragraphs and conclusion.",
+    "Smart Tables":
+      "Organise the requested information into a clear table.",
+    "Advanced Reasoning":
+      "Analyse the problem carefully, explain the important steps and give a logical answer."
+  };
+
+  output.textContent =
+    "NOVA AI — " + currentTool +
+    "\n\nYour request: " + prompt +
+    "\n\nTask instructions: " + instructions[currentTool] +
+    "\n\nTo generate a real AI response, connect NOVA to an AI API through a secure backend.";
+}
+</script>
+
+</body>
+</html>
