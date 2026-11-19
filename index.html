@@ -1,184 +1,146 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOVA AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MEGA GAMES</title>
 <style>
-* { box-sizing:border-box; }
-body {
-  margin:0;
-  background:#0b1020;
-  color:white;
-  font-family:Arial,sans-serif;
+*{box-sizing:border-box}
+body{
+ margin:0;background:#10111b;color:white;
+ font-family:Arial,sans-serif;
 }
-header {
-  padding:20px;
-  background:#151d35;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid #35415e;
+header{
+ background:#191a2b;padding:18px 5%;
+ display:flex;align-items:center;
+ justify-content:space-between;gap:15px;
+ flex-wrap:wrap;
 }
-.logo {font-size:27px;font-weight:bold;color:#a993ff}
-main {max-width:1000px;margin:auto;padding:30px 18px}
-h1 {font-size:38px}
-.subtitle {color:#abb5d0}
-.tools {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:12px;
-  margin:25px 0;
+.logo{font-size:28px;font-weight:bold;color:#8b6cff}
+input{
+ padding:13px;border:0;border-radius:10px;
+ width:250px;max-width:100%;
+ background:#292a40;color:white;
 }
-.tool {
-  background:#192440;
-  color:white;
-  padding:18px 10px;
-  border:1px solid #344365;
-  border-radius:14px;
-  cursor:pointer;
-  font-size:15px;
+nav{
+ display:flex;gap:10px;overflow:auto;
+ padding:15px 5%;background:#171827;
 }
-.tool:hover,.tool.active {
-  background:#49377f;
-  border-color:#a993ff;
+nav button,.play{
+ background:#704cff;color:white;
+ border:0;padding:12px 17px;
+ border-radius:9px;cursor:pointer;
 }
-.workspace {
-  background:#151e35;
-  padding:22px;
-  border-radius:18px;
-  border:1px solid #344365;
+main{padding:25px 5%}
+h2{margin-top:30px}
+.hero{
+ background:linear-gradient(120deg,#5030a5,#162d6a);
+ padding:35px;border-radius:18px;
 }
-textarea {
-  width:100%;
-  height:140px;
-  background:#0b1428;
-  color:white;
-  border:1px solid #445276;
-  border-radius:12px;
-  padding:15px;
-  resize:vertical;
-  font-size:16px;
+.hero h1{font-size:38px}
+.games{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:18px;margin-top:20px;
 }
-button {
-  cursor:pointer;
+.card{
+ background:#202136;border-radius:15px;
+ overflow:hidden;
+ transition:.2s;
 }
-.send {
-  background:#8868ed;
-  color:white;
-  border:0;
-  border-radius:10px;
-  padding:13px 22px;
-  margin-top:12px;
-  font-weight:bold;
+.card:hover{transform:translateY(-5px)}
+.art{
+ height:130px;display:grid;
+ place-items:center;font-size:65px;
+ background:#303151;
 }
-.output {
-  background:#0b1428;
-  padding:16px;
-  border-radius:12px;
-  margin-top:18px;
-  min-height:60px;
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
-}
-.hidden {display:none}
-footer {text-align:center;color:#8995b4;padding:30px}
+.info{padding:14px}
+.info p{color:#aaa;font-size:13px}
+.play{width:100%;margin-top:8px}
+a{color:inherit;text-decoration:none}
+footer{text-align:center;padding:35px;color:#888}
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">✦ NOVA AI</div>
-  <div>⚡ AI WORKSPACE</div>
+ <div class="logo">🎮 MEGA GAMES</div>
+ <input id="search" placeholder="🔍 Search games..." oninput="render()">
 </header>
 
+<nav>
+ <button onclick="category='All';render()">🏠 All</button>
+ <button onclick="category='Action';render()">⚔️ Action</button>
+ <button onclick="category='Racing';render()">🏎️ Racing</button>
+ <button onclick="category='Puzzle';render()">🧩 Puzzle</button>
+ <button onclick="category='Horror';render()">👻 Horror</button>
+ <button onclick="category='Sports';render()">⚽ Sports</button>
+</nav>
+
 <main>
-  <h1>Welcome to <span style="color:#a993ff">NOVA AI</span></h1>
-  <p class="subtitle">
-    Your creative AI assistant. Imagine, create, write and build.
-  </p>
+ <section class="hero">
+  <h1>PLAY AMAZING GAMES.</h1>
+  <p>Discover fun games from creators around the world.</p>
+  <button class="play" onclick="document.getElementById('all').scrollIntoView()">EXPLORE GAMES ↓</button>
+ </section>
 
-  <h2>Choose your AI tool</h2>
+ <h2>🔥 Featured Games</h2>
+ <div class="games" id="featured"></div>
 
-  <div class="tools">
-    <button class="tool active" onclick="selectTool('AI Assistant',this)">💬<br>AI Chat</button>
-    <button class="tool" onclick="selectTool('Coding Assistant',this)">💻<br>AI Coding</button>
-    <button class="tool" onclick="selectTool('Image Creator',this)">🎨<br>Images</button>
-    <button class="tool" onclick="selectTool('Video Creator',this)">🎬<br>Videos</button>
-    <button class="tool" onclick="selectTool('Essay Writer',this)">📝<br>Essays</button>
-    <button class="tool" onclick="selectTool('Smart Tables',this)">📊<br>Tables</button>
-    <button class="tool" onclick="selectTool('Advanced Reasoning',this)">🧠<br>Super Brain</button>
-  </div>
-
-  <section class="workspace">
-    <h2 id="heading">AI Assistant</h2>
-
-    <textarea id="prompt"
-      placeholder="Tell NOVA what you want to do..."></textarea>
-
-    <button class="send" onclick="runNova()">
-      ✨ Ask NOVA AI
-    </button>
-
-    <div class="output" id="output">
-      Hello! I'm NOVA AI. What can I help you create today?
-    </div>
-  </section>
+ <h2 id="all">🎮 Explore Games</h2>
+ <div class="games" id="games"></div>
+ <p id="empty"></p>
 </main>
 
 <footer>
-  NOVA AI © 2026 · Your ideas, your future.
+ MEGA GAMES © 2026<br>
+ A place to discover games.
 </footer>
 
 <script>
-let currentTool = "AI Assistant";
+let category='All';
 
-function selectTool(tool,button) {
-  currentTool = tool;
+const games=[
+ {name:'Slope',emoji:'🟢',type:'Action',url:'https://slopegame.com/'},
+ {name:'2048',emoji:'🔢',type:'Puzzle',url:'https://play2048.co/'},
+ {name:'Agar.io',emoji:'🔵',type:'Action',url:'https://agar.io/'},
+ {name:'Little Alchemy 2',emoji:'🧪',type:'Puzzle',url:'https://littlealchemy2.com/'},
+ {name:'Moto X3M',emoji:'🏍️',type:'Racing',url:'https://www.coolmathgames.com/0-moto-x3m'},
+ {name:'Pac-Man',emoji:'👾',type:'Action',url:'https://www.google.com/search?q=play+pacman'},
+ {name:'Chess',emoji:'♟️',type:'Puzzle',url:'https://www.chess.com/play'},
+ {name:'Basketball Stars',emoji:'🏀',type:'Sports',url:'https://www.crazygames.com/game/basketball-stars'},
+ {name:'Drift Hunters',emoji:'🚗',type:'Racing',url:'https://www.drifthunters.com/'},
+ {name:'Granny',emoji:'👻',type:'Horror',url:'https://www.google.com/search?q=Granny+game'}
+];
 
-  document.getElementById("heading").textContent = tool;
-
-  document.querySelectorAll(".tool").forEach(b=>{
-    b.classList.remove("active");
-  });
-
-  button.classList.add("active");
+function card(g){
+ return `
+ <div class="card">
+  <div class="art">${g.emoji}</div>
+  <div class="info">
+   <b>${g.name}</b>
+   <p>${g.type} Game</p>
+   <a href="${g.url}" target="_blank" rel="noopener noreferrer">
+    <button class="play">PLAY NOW ▶</button>
+   </a>
+  </div>
+ </div>`;
 }
 
-function runNova() {
-  const prompt = document.getElementById("prompt").value.trim();
-  const output = document.getElementById("output");
-
-  if (!prompt) {
-    output.textContent = "Please enter a request first!";
-    return;
-  }
-
-  const instructions = {
-    "AI Assistant":
-      "Answer the user's question clearly and helpfully.",
-    "Coding Assistant":
-      "Act as an expert programmer. Write readable code, explain it and help debug errors.",
-    "Image Creator":
-      "Create a detailed image generation prompt describing the subject, style, lighting and composition.",
-    "Video Creator":
-      "Create a video storyboard with scenes, camera movements and descriptions.",
-    "Essay Writer":
-      "Write a well-structured essay with an introduction, main paragraphs and conclusion.",
-    "Smart Tables":
-      "Organise the requested information into a clear table.",
-    "Advanced Reasoning":
-      "Analyse the problem carefully, explain the important steps and give a logical answer."
-  };
-
-  output.textContent =
-    "NOVA AI — " + currentTool +
-    "\n\nYour request: " + prompt +
-    "\n\nTask instructions: " + instructions[currentTool] +
-    "\n\nTo generate a real AI response, connect NOVA to an AI API through a secure backend.";
+function render(){
+ let query=document.getElementById('search').value.toLowerCase();
+ let filtered=games.filter(g=>
+  (category==='All'||g.type===category)&&
+  g.name.toLowerCase().includes(query)
+ );
+ document.getElementById('games').innerHTML=filtered.map(card).join('');
+ document.getElementById('empty').innerText=
+  filtered.length?'':'No games found. Try another search!';
+ document.getElementById('featured').innerHTML=
+  games.slice(0,3).map(card).join('');
 }
+render();
 </script>
-
 </body>
 </html>
